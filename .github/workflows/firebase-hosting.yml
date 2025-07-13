@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Node.js
@@ -21,14 +21,11 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Authenticate with Firebase using service account
-        run: |
-          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" > $HOME/firebase-key.json
-        shell: bash
+      - name: Write service account key to file
+        run: echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" > "${{ github.workspace }}/firebase-key.json"
 
-      - name: Deploy to Firebase
+      - name: Deploy to Firebase Hosting
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/firebase-key.json
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-key.json
         run: |
-          cp $HOME/firebase-key.json $GOOGLE_APPLICATION_CREDENTIALS
           firebase deploy --only hosting --project dynamixfx-tradecopier
