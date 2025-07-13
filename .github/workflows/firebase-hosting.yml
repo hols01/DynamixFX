@@ -28,4 +28,4 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase-key.json
         run: |
-          firebase deploy --only hosting --project dynamixfx-tradecopier --token "$(firebase login:ci)"
+          firebase deploy --only hosting --project dynamixfx-tradecopier
